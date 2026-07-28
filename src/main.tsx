@@ -6,7 +6,13 @@ import App from "./App.tsx";
 import "./index.css";
 import { store } from "./store/index.ts";
 
-createRoot(document.getElementById("root")!).render(
+const rootElement = document.getElementById("root");
+
+if (!rootElement) {
+	throw new Error('Elemento "#root" não encontrado');
+}
+
+createRoot(rootElement).render(
 	<StrictMode>
 		<Provider store={store}>
 			<App />

@@ -6,6 +6,7 @@ import { SearchBar } from "@/components/layout/SearchBar";
 import { RepoList } from "@/components/repo/RepoList";
 import { RepoListSkeleton } from "@/components/repo/RepoListSkeleton";
 import { RepoToolbar } from "@/components/repo/RepoToolbar";
+import { Separator } from "@/components/ui/separator";
 import { UserProfile } from "@/components/user/UserProfile";
 import { UserProfileSkeleton } from "@/components/user/UserProfileSkeleton";
 import { fetchGitHubData } from "@/core/services/thunks";
@@ -14,7 +15,6 @@ import { useSortedFilteredRepos } from "@/hooks/useSortedFilteredRepos";
 import { getRepoLanguages } from "@/lib/repo-filters";
 import { setCurrentUser } from "@/store/githubSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { Separator } from "@/components/ui/separator";
 
 export function UserPage() {
 	const { username = "" } = useParams();

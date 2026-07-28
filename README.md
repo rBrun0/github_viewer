@@ -1,75 +1,45 @@
-# React + TypeScript + Vite
+# GitHub Viewer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação web em React para buscar usuários do GitHub, visualizar perfil e listar repositórios públicos — com ordenação, filtros, cache local e dark mode.
 
-Currently, two official plugins are available:
+## Pré-requisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- [Bun](https://bun.sh/) (recomendado) ou Node.js 20+
 
-## React Compiler
+## Instalação
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+bun install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Comando | Descrição |
+|---------|-----------|
+| `bun run dev` | Sobe o servidor de desenvolvimento |
+| `bun run build` | Typecheck + build de produção |
+| `bun run preview` | Preview do build |
+| `bun run lint` | Lint com Biome |
+| `bun run test` | Testes em modo watch (Vitest) |
+| `bun run test:run` | Executa os testes uma vez |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Uso
 
-```
+1. Abra a home e busque um username do GitHub.
+2. Na página do usuário, veja avatar, bio, e-mail (quando público), seguidores/seguindo e a lista de repositórios.
+3. Ordene e filtre os repositórios; clique em um item para ver o detalhe.
+4. Use o toggle no header para alternar o tema claro/escuro.
+
+## Rotas
+
+| Rota | Descrição |
+|------|-----------|
+| `/` | Busca e histórico recente |
+| `/users/:username` | Perfil + repositórios |
+| `/users/:username/:repo` | Detalhe do repositório |
+
+## Observações
+
+- A API pública do GitHub frequentemente retorna `email: null`, mesmo quando o perfil tem e-mail configurado como privado. Nesse caso a UI exibe “E-mail não disponível”.
+- A listagem de repositórios usa até 100 repos públicos (`per_page=100`).
+- Há cache em memória (Redux) dos últimos 8 usuários, com expiração de 5 minutos.
