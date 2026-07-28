@@ -14,6 +14,7 @@ import { useSortedFilteredRepos } from "@/hooks/useSortedFilteredRepos";
 import { getRepoLanguages } from "@/lib/repo-filters";
 import { setCurrentUser } from "@/store/githubSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { Separator } from "@/components/ui/separator";
 
 export function UserPage() {
 	const { username = "" } = useParams();
@@ -48,7 +49,7 @@ export function UserPage() {
 	}, [username, dispatch, clearFilters]);
 
 	const showSkeleton = loading && !cached;
-	const showError = Boolean(error) && !cached && !loading;
+	const showError = !!error && !cached && !loading;
 	const isCurrentUserMatch = currentUser === normalized;
 
 	if (showSkeleton) {
@@ -107,6 +108,8 @@ export function UserPage() {
 			<SearchBar defaultUsername={username} compact />
 			<UserProfile user={cached.user} />
 
+			<Separator className="my-4" />
+
 			<section className="flex flex-col gap-4">
 				<h2 className="font-heading text-lg font-medium">Repositórios</h2>
 				<RepoToolbar
@@ -121,6 +124,9 @@ export function UserPage() {
 					onMinStarsChange={setMinStars}
 					onClearFilters={clearFilters}
 				/>
+
+				<Separator className="my-4" />
+
 				{loading ? <RepoListSkeleton count={3} /> : null}
 				<RepoList
 					username={normalized}

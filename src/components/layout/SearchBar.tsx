@@ -1,24 +1,12 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import { SearchIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { z } from "zod";
 
 import { Form, FormInput } from "@/components/form";
 import { Button } from "@/components/ui/button";
 import { fetchGitHubData } from "@/core/services/thunks";
+import { useSearchForm } from "@/schemas";
 import { setCurrentUser } from "@/store/githubSlice";
 import { useAppDispatch } from "@/store/hooks";
-
-const searchSchema = z.object({
-	username: z
-		.string()
-		.trim()
-		.min(1, "Informe um usuário")
-		.regex(/^[a-zA-Z0-9-]+$/, "Username inválido"),
-});
-
-type SearchFormValues = z.infer<typeof searchSchema>;
 
 type SearchBarProps = {
 	defaultUsername?: string;
@@ -31,11 +19,7 @@ export function SearchBar({
 }: SearchBarProps) {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-
-	const form = useForm<SearchFormValues>({
-		resolver: zodResolver(searchSchema),
-		defaultValues: { username: defaultUsername },
-	});
+	const form = useSearchForm(defaultUsername);
 
 	const onSubmit = form.handleSubmit((values) => {
 		const username = values.username.trim();

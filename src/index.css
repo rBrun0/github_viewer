@@ -132,3 +132,54 @@
 		@apply min-h-svh;
 	}
 }
+
+* {
+    --scrollbar-thumb-color: transparent;
+    transition: --scrollbar-thumb-color 0.1s ease;
+}
+
+*:hover {
+    --scrollbar-thumb-color: oklch(0.55 0.025 256 / 55%);
+}
+
+*::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+*::-webkit-scrollbar-track {
+    background-color: oklch(0.6 0.02 256 / 12%);
+    border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-color);
+    border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    --scrollbar-thumb-color: oklch(0.5 0.03 256 / 70%);
+}
+
+*::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+
+/* ==========================================
+   2. FALLBACK (Firefox only)
+   Isso evita que o Firefox fique sem scrollbar, 
+   mas impede que o Chrome misture as duas regras.
+   ========================================== */
+
+@supports not selector(::-webkit-scrollbar) {
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: transparent oklch(0.6 0.02 256 / 12%);
+        transition: scrollbar-color 0.3s ease;
+    }
+
+    *:hover {
+        scrollbar-color: oklch(0.55 0.025 256 / 55%) oklch(0.6 0.02 256 / 12%);
+    }
+}
