@@ -13,6 +13,8 @@ export type RepoFiltersState = {
 	sort: RepoSortOption;
 	language: string;
 	minStars: number;
+	updatedFrom: Date | null;
+	updatedTo: Date | null;
 };
 
 export const DEFAULT_REPO_FILTERS: RepoFiltersState = {
@@ -20,6 +22,8 @@ export const DEFAULT_REPO_FILTERS: RepoFiltersState = {
 	sort: "stars-desc",
 	language: "all",
 	minStars: 0,
+	updatedFrom: null,
+	updatedTo: null,
 };
 
 export const MIN_STARS_OPTIONS = [
@@ -39,11 +43,25 @@ export const SORT_OPTIONS: { label: string; value: RepoSortOption }[] = [
 	{ label: "Atualização (antiga)", value: "updated-asc" },
 ];
 
+function startOfDay(date: Date) {
+	const next = new Date(date);
+	next.setHours(0, 0, 0, 0);
+	return next;
+}
+
+function endOfDay(date: Date) {
+	const next = new Date(date);
+	next.setHours(23, 59, 59, 999);
+	return next;
+}
+
 export function hasActiveRepoFilters(filters: RepoFiltersState) {
 	return (
 		filters.query.trim().length > 0 ||
 		filters.language !== "all" ||
-		filters.minStars > 0
+		filters.minStars > 0 ||
+		filters.updatedFrom !== null ||
+		filters.updatedTo !== null
 	);
 }
 
@@ -60,6 +78,12 @@ export function filterAndSortRepos(
 	filters: RepoFiltersState,
 ) {
 	const query = filters.query.trim().toLowerCase();
+	const fromTime = filters.updatedFrom
+		? startOfDay(filters.updatedFrom).getTime()
+		: null;
+	const toTime = filters.updatedTo
+		? endOfDay(filters.updatedTo).getTime()
+		: null;
 
 	const filtered = repos.filter((repo) => {
 		if (filters.minStars > 0 && repo.stargazers_count < filters.minStars) {
@@ -68,6 +92,11 @@ export function filterAndSortRepos(
 		if (filters.language !== "all" && repo.language !== filters.language) {
 			return false;
 		}
+
+		const updatedAt = new Date(repo.updated_at).getTime();
+		if (fromTime !== null && updatedAt < fromTime) return false;
+		if (toTime !== null && updatedAt > toTime) return false;
+
 		if (!query) return true;
 		const name = repo.name.toLowerCase();
 		const description = (repo.description ?? "").toLowerCase();

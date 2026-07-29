@@ -100,6 +100,31 @@ describe("filterAndSortRepos", () => {
 		});
 		expect(result.map((r) => r.name)).toEqual(["alpha"]);
 	});
+
+	it("filters by updatedFrom", () => {
+		const result = filterAndSortRepos(repos, {
+			...DEFAULT_REPO_FILTERS,
+			updatedFrom: new Date("2025-01-01"),
+		});
+		expect(result.map((r) => r.name)).toEqual(["alpha", "beta"]);
+	});
+
+	it("filters by updatedTo", () => {
+		const result = filterAndSortRepos(repos, {
+			...DEFAULT_REPO_FILTERS,
+			updatedTo: new Date("2025-01-01"),
+		});
+		expect(result.map((r) => r.name)).toEqual(["beta", "zebra"]);
+	});
+
+	it("filters by updated date range", () => {
+		const result = filterAndSortRepos(repos, {
+			...DEFAULT_REPO_FILTERS,
+			updatedFrom: new Date("2025-01-01"),
+			updatedTo: new Date("2025-01-01"),
+		});
+		expect(result.map((r) => r.name)).toEqual(["beta"]);
+	});
 });
 
 describe("hasActiveRepoFilters", () => {
@@ -110,6 +135,15 @@ describe("hasActiveRepoFilters", () => {
 	it("returns true when query is set", () => {
 		expect(
 			hasActiveRepoFilters({ ...DEFAULT_REPO_FILTERS, query: "api" }),
+		).toBe(true);
+	});
+
+	it("returns true when updatedFrom is set", () => {
+		expect(
+			hasActiveRepoFilters({
+				...DEFAULT_REPO_FILTERS,
+				updatedFrom: new Date("2025-01-01"),
+			}),
 		).toBe(true);
 	});
 });

@@ -35,6 +35,8 @@ export function UserPage() {
 		setSort,
 		setLanguage,
 		setMinStars,
+		setUpdatedFrom,
+		setUpdatedTo,
 		clearFilters,
 		hasActiveFilters,
 	} = useRepoFilters();
@@ -133,6 +135,8 @@ export function UserPage() {
 					onSortChange={setSort}
 					onLanguageChange={setLanguage}
 					onMinStarsChange={setMinStars}
+					onUpdatedFromChange={setUpdatedFrom}
+					onUpdatedToChange={setUpdatedTo}
 					onClearFilters={clearFilters}
 				/>
 

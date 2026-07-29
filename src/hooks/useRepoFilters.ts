@@ -27,6 +27,14 @@ export function useRepoFilters() {
 		setFilters((prev) => ({ ...prev, minStars }));
 	}, []);
 
+	const setUpdatedFrom = useCallback((updatedFrom: Date | null) => {
+		setFilters((prev) => ({ ...prev, updatedFrom }));
+	}, []);
+
+	const setUpdatedTo = useCallback((updatedTo: Date | null) => {
+		setFilters((prev) => ({ ...prev, updatedTo }));
+	}, []);
+
 	const clearFilters = useCallback(() => {
 		setFilters((prev) => ({
 			...DEFAULT_REPO_FILTERS,
@@ -45,6 +53,8 @@ export function useRepoFilters() {
 		setSort,
 		setLanguage,
 		setMinStars,
+		setUpdatedFrom,
+		setUpdatedTo,
 		clearFilters,
 		hasActiveFilters,
 	};

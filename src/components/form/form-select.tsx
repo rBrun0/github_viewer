@@ -45,6 +45,7 @@ export function FormSelect<T extends FieldValues>({
 					{label && <FormLabel>{label}</FormLabel>}
 
 					<Select
+						items={options}
 						value={(field.value as string) ?? null}
 						onValueChange={(value) => {
 							const nextValue = typeof value === "string" ? value : null;

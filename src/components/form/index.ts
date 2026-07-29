@@ -8,6 +8,7 @@ import {
 	Form as FormRoot,
 	useFormField,
 } from "./form";
+import { FormDate } from "./form-date";
 import { FormInput } from "./form-input";
 import { FormSelect } from "./form-select";
 
@@ -20,11 +21,13 @@ const Form = Object.assign(FormRoot, {
 	Message: FormMessage,
 	Input: FormInput,
 	Select: FormSelect,
+	Date: FormDate,
 });
 
 export {
 	Form,
 	FormControl,
+	FormDate,
 	FormDescription,
 	FormField,
 	FormInput,
