@@ -9,7 +9,9 @@ import { RepoToolbar } from "@/components/repo/RepoToolbar";
 import { Separator } from "@/components/ui/separator";
 import { UserProfile } from "@/components/user/UserProfile";
 import { UserProfileSkeleton } from "@/components/user/UserProfileSkeleton";
+import { UserStickyHeader } from "@/components/user/UserStickyHeader";
 import { fetchGitHubData } from "@/core/services/thunks";
+import { useElementOutOfView } from "@/hooks/useElementOutOfView";
 import { useRepoFilters } from "@/hooks/useRepoFilters";
 import { useSortedFilteredRepos } from "@/hooks/useSortedFilteredRepos";
 import { getRepoLanguages } from "@/lib/repo-filters";
@@ -36,6 +38,10 @@ export function UserPage() {
 		clearFilters,
 		hasActiveFilters,
 	} = useRepoFilters();
+
+	const { ref: profileRef, outOfView: profileOutOfView } = useElementOutOfView({
+		rootMarginTop: 56,
+	});
 
 	const repos = cached?.repos ?? [];
 	const filteredRepos = useSortedFilteredRepos(repos, filters);
@@ -105,8 +111,13 @@ export function UserPage() {
 
 	return (
 		<div className="flex flex-col gap-8">
+			<UserStickyHeader user={cached.user} visible={profileOutOfView} />
+
 			<SearchBar defaultUsername={username} compact />
-			<UserProfile user={cached.user} />
+
+			<div ref={profileRef}>
+				<UserProfile user={cached.user} />
+			</div>
 
 			<Separator className="my-4" />
 

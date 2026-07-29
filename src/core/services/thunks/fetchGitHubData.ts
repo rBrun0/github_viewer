@@ -47,21 +47,27 @@ export const fetchGitHubData = createAsyncThunk<
 				const tempoPassado = Date.now() - cachedData.updatedAt;
 
 				if (tempoPassado < CACHE_TTL_MS) {
-					console.log(
-						`[CACHE HIT] Dados de ${username} estão frescos. Usando Redux.`,
-					);
+					if (import.meta.env.DEV) {
+						console.log(
+							`[CACHE HIT] Dados de ${username} estão frescos. Usando Redux.`,
+						);
+					}
 					return false;
 				}
 
-				console.log(
-					`[CACHE STALE] Dados de ${username} expiraram. Atualizando via Axios...`,
-				);
+				if (import.meta.env.DEV) {
+					console.log(
+						`[CACHE STALE] Dados de ${username} expiraram. Atualizando via Axios...`,
+					);
+				}
 				return true;
 			}
 
-			console.log(
-				`[CACHE MISS] Usuário ${username} não está no cache. Buscando via Axios...`,
-			);
+			if (import.meta.env.DEV) {
+				console.log(
+					`[CACHE MISS] Usuário ${username} não está no cache. Buscando via Axios...`,
+				);
+			}
 			return true;
 		},
 	},
