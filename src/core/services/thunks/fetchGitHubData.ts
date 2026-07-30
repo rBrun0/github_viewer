@@ -44,9 +44,9 @@ export const fetchGitHubData = createAsyncThunk<
 			const cachedData = getState().github.cache[lowerUsername];
 
 			if (cachedData) {
-				const tempoPassado = Date.now() - cachedData.updatedAt;
+				const elapsedTime = Date.now() - cachedData.updatedAt;
 
-				if (tempoPassado < CACHE_TTL_MS) {
+				if (elapsedTime < CACHE_TTL_MS) {
 					if (import.meta.env.DEV) {
 						console.log(
 							`[CACHE HIT] Dados de ${username} estão frescos. Usando Redux.`,

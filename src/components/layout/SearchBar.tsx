@@ -47,7 +47,7 @@ export function SearchBar({
 					autoComplete="off"
 					spellCheck={false}
 				/>
-				<Button type="submit" className="shrink-0 sm:mt-0">
+				<Button type="submit" className="shrink-0 sm:mt-0 cursor-pointer">
 					<SearchIcon className="size-4" />
 					Buscar
 				</Button>

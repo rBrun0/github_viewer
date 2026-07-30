@@ -10,7 +10,7 @@ export function AppShell() {
 	const { isDark, setTheme } = useTheme();
 
 	return (
-		<div className="flex min-h-svh min-w-0 flex-col overflow-x-hidden bg-background text-foreground">
+		<div className="flex min-h-svh min-w-0 flex-col bg-background text-foreground">
 			<header className="sticky top-0 z-20 border-b border-border bg-background/90 backdrop-blur-sm">
 				<div className="mx-auto flex h-14 w-full min-w-0 max-w-3xl items-center justify-between gap-4 px-4">
 					<Link

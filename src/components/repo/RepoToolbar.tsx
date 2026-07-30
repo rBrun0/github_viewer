@@ -75,7 +75,7 @@ export function RepoToolbar({
 				{hasActiveFilters ? (
 					<Button
 						type="button"
-						variant="ghost"
+						// variant="ghost"
 						size="sm"
 						className="shrink-0 sm:mb-0.5"
 						onClick={onClearFilters}
