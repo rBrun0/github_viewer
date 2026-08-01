@@ -1,8 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-
-import { UserProfile } from "@/components/user/UserProfile";
-import type { GitHubUser } from "@/core/interfaces/github.interface";
+import type { GitHubUser } from "../../core/interfaces/github.interface";
+import { UserProfile } from "./UserProfile";
 
 const baseUser: GitHubUser = {
 	login: "octocat",

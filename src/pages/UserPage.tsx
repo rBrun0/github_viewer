@@ -22,9 +22,11 @@ export function UserPage() {
 	const { username = "" } = useParams();
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const normalized = username.toLowerCase();
+	const normalizedUsername = username.toLowerCase();
 
-	const cached = useAppSelector((state) => state.github.cache[normalized]);
+	const cached = useAppSelector(
+		(state) => state.github.cache[normalizedUsername],
+	);
 	const loading = useAppSelector((state) => state.github.loading);
 	const error = useAppSelector((state) => state.github.error);
 	const currentUser = useAppSelector((state) => state.github.currentUser);
@@ -58,7 +60,7 @@ export function UserPage() {
 
 	const showSkeleton = loading && !cached;
 	const showError = !!error && !cached && !loading;
-	const isCurrentUserMatch = currentUser === normalized;
+	const isCurrentUserMatch = currentUser === normalizedUsername;
 
 	if (showSkeleton) {
 		return (
@@ -144,7 +146,7 @@ export function UserPage() {
 
 				{loading ? <RepoListSkeleton count={3} /> : null}
 				<RepoList
-					username={normalized}
+					username={normalizedUsername}
 					repos={filteredRepos}
 					totalCount={repos.length}
 					hasActiveFilters={hasActiveFilters}

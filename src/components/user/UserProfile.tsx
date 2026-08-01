@@ -54,14 +54,16 @@ export function UserProfile({ user }: UserProfileProps) {
 				</div>
 
 				<p className="text-sm">
-					<span className="text-muted-foreground">E-mail: </span>
 					{user.email ? (
-						<a
-							href={`mailto:${user.email}`}
-							className="underline underline-offset-2 hover:text-foreground"
-						>
-							{user.email}
-						</a>
+						<>
+							<span className="text-muted-foreground">E-mail: </span>
+							<a
+								href={`mailto:${user.email}`}
+								className="underline underline-offset-2 hover:text-foreground"
+							>
+								{user.email}
+							</a>
+						</>
 					) : (
 						<span className="text-muted-foreground">E-mail não disponível</span>
 					)}

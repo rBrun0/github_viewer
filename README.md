@@ -96,6 +96,10 @@ Os logs de cache (`HIT` / `STALE` / `MISS`) aparecem apenas em desenvolvimento (
 
 O projeto é **componentizado** por domínio (`user`, `repo`, `layout`, `feedback`), com serviços/queries/thunks separados, schemas de formulário em `src/schemas` e utilitários puros em `lib` — visando reuso, testes e separação de responsabilidades.
 
+### Qualidade de código (Husky + Biome)
+
+O **Husky** configura um hook `pre-commit` que roda `bun run lint:apply` (Biome) antes de cada commit. Assim o lint e as correções automáticas entram no fluxo do Git, evitando que código fora do padrão seja commitado por acidente. Os hooks são instalados automaticamente no `bun install` via o script `prepare`.
+
 ## Observações da API
 
 - A API pública do GitHub frequentemente retorna `email: null`, mesmo quando o perfil tem e-mail privado. A UI exibe “E-mail não disponível”.

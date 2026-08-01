@@ -3,19 +3,5 @@
 	"references": [
 		{ "path": "./tsconfig.app.json" },
 		{ "path": "./tsconfig.node.json" }
-	],
-	"compilerOptions": {
-		"baseUrl": ".",
-		"paths": {
-			"@/*": ["src/*"]
-		},
-		"strict": true,
-		"noImplicitAny": true,
-		"noImplicitThis": true,
-		"noImplicitReturns": true,
-		// "noImplicitIndexSignatures": true,
-		"noImplicitOverride": true
-		// "noImplicitUseStrict": true,
-		// "noImplicitUseStrict": true,
-	}
+	]
 }
